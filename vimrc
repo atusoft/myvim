@@ -31,15 +31,14 @@ let Tlist_Close_On_Select=1
 let Tlist_GainFocus_On_ToggleOpen=1 "set focus when taglist open
 map <F3> :TlistToggle<cr>
 
-nmap <F4> :Sexplore!<cr>
+nmap <F4> :NERDTree<cr>
 nmap <a-q> :q<cr>
 map <c-s> :w<cr>
 map <a-t> :tabe %:rTest.%:e<cr>
 map <c-a-f> gg=G
 "edit vimrc and auto load vimrc
 nmap <silent><leader>s :source $MYVIMRC<cr>
-nmap <silent><leader>v :tabe $MYVIMRC<cr>
-
+nmap <silent><leader>v :tabe $MYVIMRC<cr> 
 autocmd! bufwritepost .vimrc source ~/.vimrc
 autocmd filetype groovy map <F5> :call Run()<cr>
 
