@@ -41,9 +41,7 @@ nmap <silent><leader>s :source $MYVIMRC<cr>
 nmap <silent><leader>v :tabe $MYVIMRC<cr> 
 autocmd! bufwritepost .vimrc source ~/.vimrc
 autocmd filetype groovy map <F5> :call Run()<cr>
-autocmd BufWritePre *.scala :call Format() 
-autocmd BufWritePre *.java :call Format() 
-autocmd BufWritePre *.rb :call Format() 
+autocmd BufWritePre *.scala,*.java,*.rb :call Format() 
 func! Run()
 	exec "w"
 	exec "!~/javatools/groovy-1.6.3/bin/groovy %"
