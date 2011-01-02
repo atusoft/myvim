@@ -5,6 +5,13 @@ set shiftwidth=4
 set softtabstop=4
 filetype indent on
 filetype plugin on 
+filetype plugin indent on
+set autoindent
+set tabstop=4
+set smartindent
+set nowrap
+set hlsearch "hignlight search result
+set backspace=indent,eol,start whichwrap+=<,>,[,] "allow backspace
 set nu
 syntax on
 colorscheme molokai
@@ -52,9 +59,6 @@ autocmd filetype ruby map <F5> :!ruby %<cr>
 autocmd filetype ruby map <F6> :!spec % 
 autocmd filetype python map <F5> :!python %<cr>
 map <c-b> :!gant<cr>
-set autoindent
-set tabstop=4
-set smartindent
 " show current line number
 set ruler
 " ignore case
