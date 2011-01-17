@@ -206,11 +206,20 @@ snippet foreach
 	foreach ($${1:variable} as $${2:key}) {
 		${3:// code...}
 	}
-snippet fun
+snippet pfun
 	${1:public }function ${2:FunctionName}(${3})
 	{
 		${4:// code...}
 	}
+snippet fun
+	function ${1:FunctionName}(${2})
+	{
+		${3:// code...}
+	}
 # $... = array (...)
 snippet array
 	$${1:arrayName} = array('${2}' => ${3});${4}
+snippet this
+	$this->${1:value}
+snippet session
+	$this->Session->${1:value}
