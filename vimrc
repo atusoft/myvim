@@ -14,6 +14,23 @@ set nowrap
 set hlsearch "hignlight search result
 set backspace=indent,eol,start whichwrap+=<,>,[,] "allow backspace
 set nu
+" update the :make command to tell Xcode to build
+set makeprg=osascript\ -e\ \"tell\ application\ \\\"Xcode\\\"\"\ -e\ \"build\"\ -e\ \"end\ tell\"
+function! XcodeClean()
+	silent execute ':!osascript -e "tell application \"Xcode\"" -e "Clean" -e "end tell"'
+endfunction
+command! -complete=command XcodeClean call XcodeClean()
+
+function! XcodeDebug()
+	silent execute '!osascript -e "tell application \"Xcode\"" -e "Debug" -e "end tell"'
+endfunction
+command! -complete=command XcodeDebug call XcodeDebug()
+
+" Command-K cleans the project
+:noremap :XcodeClean
+" Command-Return Starts the program in the debugger
+:noremap :XcodeDebug
+
 syntax on
 colorscheme darkblue
 let g:molokai_original=1
