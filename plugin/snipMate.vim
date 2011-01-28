@@ -9,22 +9,17 @@
 "                For more help see snipMate.txt; you can do this by using:
 "                :helptags ~/.vim/doc
 "                :h snipMate.txt
-
 if exists('loaded_snips') || &cp || version < 700
 	finish
 endif
 let loaded_snips = 1
 if !exists('snips_author') | let snips_author = 'Me' | endif
-
 au BufRead,BufNewFile *.snippets\= set ft=snippet
 au FileType snippet setl noet fdm=indent
-
 let s:snippets = {} | let s:multi_snips = {}
-
 if !exists('snippets_dir')
 	let snippets_dir = substitute(globpath(&rtp, 'snippets/'), "\n", ',', 'g')
 endif
-
 fun! MakeSnip(scope, trigger, content, ...)
 	let multisnip = a:0 && a:1 != ''
 	let var = multisnip ? 's:multi_snips' : 's:snippets'
@@ -34,10 +29,9 @@ fun! MakeSnip(scope, trigger, content, ...)
 	elseif multisnip | let {var}[a:scope][a:trigger] += [[a:1, a:content]]
 	else
 		echom 'Warning in snipMate.vim: Snippet '.a:trigger.' is already defined.'
-				\ .' See :h multi_snip for help on snippets with multiple matches.'
+					\ .' See :h multi_snip for help on snippets with multiple matches.'
 	endif
 endf
-
 fun! ExtractSnips(dir, ft)
 	for path in split(globpath(a:dir, '*'), "\n")
 		if isdirectory(path)
@@ -50,7 +44,6 @@ fun! ExtractSnips(dir, ft)
 		endif
 	endfor
 endf
-
 " Processes a single-snippet file; optionally add the name of the parent
 " directory for a snippet with multiple matches.
 fun s:ProcessFile(file, ft, ...)
@@ -62,9 +55,8 @@ fun s:ProcessFile(file, ft, ...)
 		echom "Error in snipMate.vim: couldn't read file: ".a:file
 	endtry
 	return a:0 ? MakeSnip(a:ft, a:1, text, keyword)
-			\  : MakeSnip(a:ft, keyword, text)
+				\  : MakeSnip(a:ft, keyword, text)
 endf
-
 fun! ExtractSnipsFile(file, ft)
 	if !filereadable(a:file) | return | endif
 	let text = readfile(a:file)
@@ -77,7 +69,6 @@ fun! ExtractSnipsFile(file, ft)
 			call MakeSnip(a:ft, trigger, content[:-2], name)
 			let inSnip = 0
 		endif
-
 		if line[:6] == 'snippet'
 			let inSnip = 1
 			let trigger = strpart(line, 8)
@@ -91,11 +82,9 @@ fun! ExtractSnipsFile(file, ft)
 		endif
 	endfor
 endf
-
 fun! ResetSnippets()
 	let s:snippets = {} | let s:multi_snips = {} | let g:did_ft = {}
 endf
-
 let g:did_ft = {}
 fun! GetSnippets(dir, filetypes)
 	for ft in split(a:filetypes, '\.')
@@ -109,19 +98,17 @@ fun! GetSnippets(dir, filetypes)
 		let g:did_ft[ft] = 1
 	endfor
 endf
-
 " Define "aliasft" snippets for the filetype "realft".
 fun s:DefineSnips(dir, aliasft, realft)
 	for path in split(globpath(a:dir, a:aliasft.'/')."\n".
-					\ globpath(a:dir, a:aliasft.'-*/'), "\n")
+				\ globpath(a:dir, a:aliasft.'-*/'), "\n")
 		call ExtractSnips(path, a:realft)
 	endfor
 	for path in split(globpath(a:dir, a:aliasft.'.snippets')."\n".
-					\ globpath(a:dir, a:aliasft.'-*.snippets'), "\n")
+				\ globpath(a:dir, a:aliasft.'-*.snippets'), "\n")
 		call ExtractSnipsFile(path, a:realft)
 	endfor
 endf
-
 fun! TriggerSnippet()
 	if exists('g:SuperTabMappingForward')
 		if g:SuperTabMappingForward == "<tab>"
@@ -130,7 +117,6 @@ fun! TriggerSnippet()
 			let SuperTabKey = "\<c-p>"
 		endif
 	endif
-
 	if pumvisible() " Update snippet if completion is used, or deal with supertab
 		if exists('SuperTabKey')
 			call feedkeys(SuperTabKey) | return ''
@@ -138,9 +124,7 @@ fun! TriggerSnippet()
 		call feedkeys("\<esc>a", 'n') " Close completion menu
 		call feedkeys("\<tab>") | return ''
 	endif
-
 	if exists('g:snipPos') | return snipMate#jumpTabStop(0) | endif
-
 	let word = matchstr(getline('.'), '\S\+\%'.col('.').'c')
 	for scope in [bufnr('%')] + split(&ft, '\.') + ['_']
 		let [trigger, snippet] = s:GetSnippet(word, scope)
@@ -152,17 +136,14 @@ fun! TriggerSnippet()
 			return snipMate#expandSnip(snippet, col)
 		endif
 	endfor
-
 	if exists('SuperTabKey')
 		call feedkeys(SuperTabKey)
 		return ''
 	endif
 	return "\<tab>"
 endf
-
 fun! BackwardsSnippet()
 	if exists('g:snipPos') | return snipMate#jumpTabStop(1) | endif
-
 	if exists('g:SuperTabMappingForward')
 		if g:SuperTabMappingBackward == "<s-tab>"
 			let SuperTabKey = "\<c-p>"
@@ -176,7 +157,6 @@ fun! BackwardsSnippet()
 	endif
 	return "\<s-tab>"
 endf
-
 " Check if word under cursor is snippet trigger; if it isn't, try checking if
 " the text after non-word characters is (e.g. check for "foo" in "bar.foo")
 fun s:GetSnippet(word, scope)
@@ -197,7 +177,6 @@ fun s:GetSnippet(word, scope)
 	endif
 	return [word, snippet]
 endf
-
 fun s:ChooseSnippet(scope, trigger)
 	let snippet = []
 	let i = 1
@@ -209,7 +188,6 @@ fun s:ChooseSnippet(scope, trigger)
 	let num = inputlist(snippet) - 1
 	return num == -1 ? '' : s:multi_snips[a:scope][a:trigger][num][1]
 endf
-
 fun! ShowAvailableSnips()
 	let line  = getline('.')
 	let col   = col('.')
@@ -237,11 +215,18 @@ fun! ShowAvailableSnips()
 			endfor
 		endfor
 	endfor
-
 	" This is to avoid a bug with Vim when using complete(col - matchlen, matches)
 	" (Issue#46 on the Google Code snipMate issue tracker).
 	call setline(line('.'), substitute(line, repeat('.', matchlen).'\%'.col.'c', '', ''))
 	call complete(col, matches)
 	return ''
 endf
+fun! GetSnipsInCurrentScope() 
+	let snips = {} 
+	for scope in [bufnr('%')] + split(&ft, '\.') + ['_'] 
+		call extend(snips, get(s:snippets, scope, {}), 'keep') 
+		call extend(snips, get(s:multi_snips, scope, {}), 'keep') 
+	endfor 
+	return snips 
+endf 
 " vim:noet:sw=4:ts=4:ft=vim
