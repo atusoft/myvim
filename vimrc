@@ -27,11 +27,16 @@ let mapleader=","
 let g:netrw_winsize = 30
 map <silent> <leader>fe :Sexplore!<cr>
 " taglist settings
+let Tlist_Auto_Open =1
+let Tlist_Use_SingleClick=1
+let Tlist_Process_File_Always=1
 let Tlist_Use_Right_Window = 1  
-let Tlist_Show_One_File = 1  
 let Tlist_Exit_OnlyWindow = 1 
 let Tlist_Close_On_Select=1
+let Tlist_File_Fold_Auto_Close=1
+let Tlist_Inc_Winwidth=1
 let Tlist_GainFocus_On_ToggleOpen=1 "set focus when taglist open
+let tlist_objc_settings = 'ObjectiveC;i:interface;c:class;m:method;p:property'
 map <F3> :TlistToggle<cr>
 nmap <F4> :NERDTree<cr>
 nmap <a-q> :q<cr>
@@ -63,7 +68,6 @@ endfunc
 autocmd filetype ruby map <F5> :!ruby %<cr>
 autocmd filetype ruby map <F6> :!spec % 
 autocmd filetype python map <F5> :!python %<cr>
-map <c-b> :!gant<cr>
 " show current line number
 set ruler
 " ignore case
