@@ -74,3 +74,9 @@ set ruler
 set ignorecase
 " autoload .vimrc
 autocmd! bufwritepost .vimrc source /home/lxq/.vimrc 
+" search word in folder
+map ft :call Search_Word()<CR>:copen<CR>
+function Search_Word()
+	let w=expand("<cword>")
+	execute "vimgrep "w" **/*.cs"
+endfunc
