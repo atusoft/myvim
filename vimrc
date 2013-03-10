@@ -17,7 +17,7 @@ set nu
 " update the :make command to tell Xcode to build
 
 syntax on
-colorscheme darkblue
+colorscheme solarized
 let g:molokai_original=1
 let g:netrw_winsize=30
 let g:snippetsEmu_key = "<S-Tab>"
@@ -80,3 +80,4 @@ function Search_Word()
 	let w=expand("<cword>")
 	execute "vimgrep "w" **/*.cs"
 endfunc
+execute pathogen#infect()
