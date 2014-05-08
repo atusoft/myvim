@@ -7,6 +7,9 @@ set nobackup
 filetype indent on
 filetype plugin on 
 filetype plugin indent on
+
+execute pathogen#infect()
+set backupdir=/tmp
 set autoindent
 set tabstop=4
 set smartindent
@@ -17,6 +20,7 @@ set nu
 " update the :make command to tell Xcode to build
 
 syntax on
+set background=dark
 colorscheme solarized
 let g:molokai_original=1
 let g:netrw_winsize=30
@@ -80,4 +84,3 @@ function Search_Word()
 	let w=expand("<cword>")
 	execute "vimgrep "w" **/*.cs"
 endfunc
-execute pathogen#infect()
