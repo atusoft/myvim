@@ -4,6 +4,7 @@ set autoindent
 set shiftwidth=4
 set softtabstop=4
 set nobackup
+set noswapfile
 filetype indent on
 filetype plugin on 
 filetype plugin indent on
@@ -21,7 +22,10 @@ set nu
 
 syntax on
 set background=dark
-colorscheme solarized
+
+let g:molokai_original = 1
+" colorscheme solarized
+colorscheme molokai
 let g:molokai_original=1
 let g:netrw_winsize=30
 let g:snippetsEmu_key = "<S-Tab>"
