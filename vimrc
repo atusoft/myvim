@@ -20,13 +20,14 @@ set backspace=indent,eol,start whichwrap+=<,>,[,] "allow backspace
 set nu
 " update the :make command to tell Xcode to build
 
-syntax on
-set background=dark
+syntax enable
+colorscheme Tomorrow-Night
+set background=light
+"set background=dark
+"colorscheme solarized
+" let g:molokai_original = 1
+" colorscheme molokai
 
-let g:molokai_original = 1
-" colorscheme solarized
-colorscheme molokai
-let g:molokai_original=1
 let g:netrw_winsize=30
 let g:snippetsEmu_key = "<S-Tab>"
 let mapleader=","
