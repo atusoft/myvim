@@ -21,7 +21,7 @@ set nu
 " update the :make command to tell Xcode to build
 
 syntax enable
-colorscheme Tomorrow-Night
+colorscheme delek
 set background=light
 "set background=dark
 "colorscheme solarized
@@ -44,7 +44,7 @@ let Tlist_Exit_OnlyWindow = 1
 let Tlist_Close_On_Select=1
 let Tlist_File_Fold_Auto_Close=1
 let Tlist_Inc_Winwidth=1
-let Tlist_GainFocus_On_ToggleOpen=1 "set focus when taglist open
+"let Tlist_GainFocus_On_ToggleOpen=1 "set focus when taglist open
 let tlist_objc_settings = 'ObjectiveC;i:interface;c:class;m:method;p:property'
 map <F3> :TlistToggle<cr>
 nmap <F4> :NERDTree<cr>
@@ -52,10 +52,6 @@ nmap <a-q> :q<cr>
 map <c-s> :w<cr>
 map <a-t> :tabe %:rTest.%:e<cr>
 map <silent><leader>f :call Format()<cr> 
-"edit vimrc and auto load vimrc
-nmap <silent><leader>s :source $MYVIMRC<cr>
-nmap <silent><leader>v :tabe $MYVIMRC<cr> 
-autocmd! bufwritepost .vimrc source ~/.vimrc
 autocmd filetype groovy map <F5> :call Run()<cr>
 autocmd BufWritePre *.scala,*.java,*.rb :call Format() 
 func! Run()
@@ -82,10 +78,24 @@ set ruler
 " ignore case
 set ignorecase
 " autoload .vimrc
-autocmd! bufwritepost .vimrc source /home/lxq/.vimrc 
 " search word in folder
 map ft :call Search_Word()<CR>:copen<CR>
 function Search_Word()
 	let w=expand("<cword>")
 	execute "vimgrep "w" **/*.cs"
 endfunc
+
+"syntax checker
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" indentline
+let g:indentLine_char = '|'
+set list lcs=tab:\|\ 
+
