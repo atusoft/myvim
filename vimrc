@@ -21,7 +21,7 @@ set nu
 " update the :make command to tell Xcode to build
 
 syntax enable
-colorscheme delek
+colorscheme desert
 set background=light
 "set background=dark
 "colorscheme solarized
@@ -29,7 +29,7 @@ set background=light
 " colorscheme molokai
 
 let g:netrw_winsize=30
-let g:snippetsEmu_key = "<S-Tab>"
+"let g:snippetsEmu_key = "<S-Tab>"
 let mapleader=","
 " netrw setting
 """"""""""""""""""""""""""""""
@@ -54,11 +54,17 @@ map <a-t> :tabe %:rTest.%:e<cr>
 map <silent><leader>f :call Format()<cr> 
 autocmd filetype groovy map <F5> :call Run()<cr>
 autocmd BufWritePre *.scala,*.java,*.rb :call Format() 
+autocmd BufWritePost *.rb,*.haml  :!touch tmp/restart.txt
+au BufRead,BufNewFile *.erb setfiletype html
 func! Run()
 	exec "w"
 	exec "!~/javatools/groovy-1.6.3/bin/groovy %"
 endfunc
 autocmd filetype groovy map <F6> :call Test()<cr>
+func! RubyTest()
+	let testfile="test_"+expand('%:t')
+	exec testfile
+endfunc
 func! Test()
 	exec "w"
 	exec "!groovyc %"
@@ -71,7 +77,7 @@ func! Format()
 	exec "normal " . s:currentLine . "G"
 endfunc
 autocmd filetype ruby map <F5> :!ruby %<cr>
-autocmd filetype ruby map <F6> :!spec % 
+autocmd filetype ruby map <F6> :call RubyTest()
 autocmd filetype python map <F5> :!python %<cr>
 " show current line number
 set ruler
@@ -86,8 +92,9 @@ function Search_Word()
 endfunc
 
 "syntax checker
+let g:statline_syntastic = 0
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
