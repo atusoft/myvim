@@ -21,12 +21,10 @@ set nu
 " update the :make command to tell Xcode to build
 
 syntax enable
-colorscheme desert
+colorscheme Tomorrow-Night-Bright
 set background=light
 "set background=dark
-"colorscheme solarized
 " let g:molokai_original = 1
-" colorscheme molokai
 
 let g:netrw_winsize=30
 "let g:snippetsEmu_key = "<S-Tab>"
